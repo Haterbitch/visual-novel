@@ -44,9 +44,16 @@
     <script type="module">
         import { VisualNovelEngine } from './engine/engine.js';
         import { story } from './stories/example-story.js';
+        import { preloadWithLoadingScreen } from './preloader.js';
 
         // Start the engine when the page loads
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('vn-container');
+
+            // Preload all images with loading screen
+            await preloadWithLoadingScreen(container, story);
+
+            // Start the game after preloading
             new VisualNovelEngine(story);
         });
     </script>
