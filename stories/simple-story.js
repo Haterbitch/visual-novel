@@ -29,49 +29,49 @@ export const story = {
         Start: [
             background('bedroom'),
             showCharacter('you', CharacterPose.neutral, CharacterPosition.center),
-            narration('It\'s Monday morning. You wake up and check your phone.'),
-            narration('There\'s a weather alert: "Heavy rain expected this afternoon."'),
+            narration('Du står ude foran slottet.'),
+            narration('Det er spooky, men også spændende. '),
             hideCharacter('you'),
 
             choice(
-                'Do you take an umbrella?',
+                'Går du ind på slottet?',
                 [
-                    'Yes, better safe than sorry',
-                    'TakeUmbrella',
+                    'Fuck JA! Elsker SPOOKY!',
+                    'indpaaslottet',
                 ],
                 [
-                    'No, it probably won\'t rain',
-                    'SkipUmbrella',
+                    'NEJ! GET MED THE FUCK OUT OF HERE!!',
+                    'nejtak',
                 ],
             ),
         ],
 
-        TakeUmbrella: [
-            narration('You grab your umbrella before heading out.'),
-            setVariable('tookUmbrella', true),
-            jumpTo('School'),
+        indpaaslottet: [
+            narration('Du går nu ind på Spooky Slottet. '),
+            setVariable('indpaaslottet', true),
+            jumpTo('Eat'),
         ],
 
-        SkipUmbrella: [
-            narration('You decide to risk it and leave the umbrella at home.'),
-            setVariable('tookUmbrella', false),
-            jumpTo('School'),
+        nejtak: [
+            narration('Slottet er hjemsøgt og hiver dig ind om du vil eller ej!!'),
+            setVariable('nejtak', false),
+            jumpTo('Eat'),
         ],
 
-        School: [
-            background('park'),
+        Eat: [
+            background('eat'),
             showCharacter('bob', CharacterPose.happy, CharacterPosition.right),
-            dialogue('bob', 'Hey! Ready for the big test today?'),
+            dialogue('bob', 'UHHHHHH!!! Bøh'),
             showCharacter('you', CharacterPose.neutral, CharacterPosition.left),
 
             choice(
-                'How do you respond?',
+                'Hvordan reagere du, på den anden person?',
                 [
-                    'Yeah! I studied all weekend.',
+                    'HEJ! skal vi være venner??',
                     'Confident',
                 ],
                 [
-                    'Ugh, don\'t remind me...',
+                    'ARRRRRGH!!! er du et spøgelse?',
                     'Nervous',
                 ],
             ),
@@ -79,116 +79,86 @@ export const story = {
 
         Confident: [
             showCharacter('you', CharacterPose.happy, CharacterPosition.left),
-            dialogue('you', 'Yeah! I studied all weekend.'),
+            dialogue('you', 'NIIICE! Du virker sej!'),
             showCharacter('bob', CharacterPose.happy, CharacterPosition.right),
-            dialogue('bob', 'That\'s the spirit! Want to study together at lunch?'),
+            dialogue('bob', 'Jeg Er super sej!'),
             setVariable('friendlyPoints', state => state.variables.friendlyPoints + 1),
             jumpTo('Lunch'),
         ],
 
         Nervous: [
             showCharacter('you', CharacterPose.sad, CharacterPosition.left),
-            dialogue('you', 'Ugh, don\'t remind me...'),
+            dialogue('you', 'HJÆLP HJÆLP DU ER ET SPØGELSE!!'),
             showCharacter('bob', CharacterPose.neutral, CharacterPosition.right),
-            dialogue('bob', 'Don\'t worry! Want to study together at lunch?'),
+            dialogue('bob', 'NEJ NEJ! rolig nu... Jeg hedder BOB '),
             jumpTo('Lunch'),
         ],
 
         Lunch: [
             hideCharacter('you'),
             hideCharacter('bob'),
-            narration('Lunch time arrives. You and Bob review your notes together.'),
-            narration('Suddenly, you hear thunder outside.'),
+            narration('Du skal se mere af slottet!'),
             showCharacter('bob', CharacterPose.neutral, CharacterPosition.center),
-            dialogue('bob', 'Looks like it\'s starting to rain heavily!'),
+            dialogue('bob', 'Jeg bor her på slottet!'),
             hideCharacter('bob'),
-            conditionalJump(
-                state => state.variables.tookUmbrella,
-                'HasUmbrella',
-                'NoUmbrella',
-            ),
+            jumpTo('indpaaslottet'),
         ],
 
-        HasUmbrella: [
+        indpaaslottet: [
             showCharacter('you', CharacterPose.happy, CharacterPosition.center),
-            narration('Good thing you brought your umbrella!'),
+            narration('Vildt, du bor her, jeg vil se mere!'),
             showCharacter('bob', CharacterPose.sad, CharacterPosition.right),
-            dialogue('bob', 'Man, I forgot mine. I\'m going to get soaked...'),
+            dialogue('bob', 'Fedt! Kom med.'),
             hideCharacter('you'),
 
             choice(
-                'What do you do?',
+                'Vil du se BoBs værelse?',
                 [
-                    'Share your umbrella with Bob',
-                    'ShareUmbrella',
+                    'Ja! mere spooky shit!',
+                    'PinkSleep',
                 ],
                 [
-                    'Wish him luck and go home',
-                    'GoHomeAlone',
+                    'KUN hvis det ikke er spooky!',
+                    'SpookySleep',
                 ],
             ),
         ],
 
-        NoUmbrella: [
+        SpookySleep: [
+            background('spookysleep'),
             showCharacter('you', CharacterPose.sad, CharacterPosition.center),
-            showCharacter('bob', CharacterPose.sad, CharacterPosition.right),
-            narration('Neither of you has an umbrella.'),
-            dialogue('bob', 'We\'re both going to get drenched!'),
             showCharacter('bob', CharacterPose.happy, CharacterPosition.right),
-            dialogue('bob', 'Well, at least we\'re in this together!'),
-            setVariable('friendlyPoints', state => state.variables.friendlyPoints + 1),
-            jumpTo('EndingTogether'),
-        ],
-
-        ShareUmbrella: [
-            showCharacter('you', CharacterPose.happy, CharacterPosition.left),
-            showCharacter('bob', CharacterPose.neutral, CharacterPosition.right),
-            dialogue('you', 'Don\'t worry! We can share mine.'),
+            narration('Jeg sagde det ikke måtte være spooky!! '),
             showCharacter('bob', CharacterPose.happy, CharacterPosition.right),
-            dialogue('bob', 'Really? Thanks! You\'re the best!'),
-            setVariable('friendlyPoints', state => state.variables.friendlyPoints + 2),
-            jumpTo('EndingBest'),
-        ],
-
-        GoHomeAlone: [
-            showCharacter('you', CharacterPose.neutral, CharacterPosition.center),
-            dialogue('you', 'Good luck! See you tomorrow.'),
+            dialogue('bob', 'Det er ikke spooky, det er cosy!'),
             hideCharacter('you'),
-            showCharacter('bob', CharacterPose.sad, CharacterPosition.center),
-            dialogue('bob', 'Yeah... see you.'),
-            hideCharacter('bob'),
+            showCharacter('you', CharacterPose.sad, CharacterPosition.left),
+            showCharacter('bob', CharacterPose.sad, CharacterPosition.right),
+            dialogue('bob', 'Vil du så ikke være venner?'),
+            dialogue('you', 'nej!'),
+            setVariable('friendlyPoints', state => state.variables.friendlyPoints + 1),
             jumpTo('EndingAlone'),
         ],
 
-        EndingBest: [
-            hideCharacter('you'),
-            hideCharacter('bob'),
-            narration('You walk home together under the umbrella, laughing and chatting.'),
-            narration('The rain doesn\'t seem so bad when you\'re with a friend.'),
-            showCharacter('you', CharacterPose.happy, CharacterPosition.left),
+        PinkSleep: [
+            background('pinksleep'),
+            showCharacter('you', CharacterPose.sad, CharacterPosition.left),
             showCharacter('bob', CharacterPose.happy, CharacterPosition.right),
-            dialogue('bob', 'Thanks again. I owe you one!'),
-            hideCharacter('you'),
-            hideCharacter('bob'),
-            narration('*** BEST ENDING: True Friendship ***'),
-            endStory(),
-        ],
-
-        EndingTogether: [
-            hideCharacter('you'),
-            hideCharacter('bob'),
-            narration('You both make a run for it through the rain.'),
-            narration('By the time you get home, you\'re both completely soaked but laughing.'),
-            narration('Sometimes the best memories come from unexpected moments.'),
-            narration('*** GOOD ENDING: Shared Experience ***'),
-            endStory(),
+            dialogue('bob', 'Jeg har lidt feminin smag!'),
+            showCharacter('bob', CharacterPose.happy, CharacterPosition.right),
+            dialogue('you', 'Det skulle være spooky! ØV jeg vil have Spooky shit! '),
+            showCharacter('bob', CharacterPose.sad, CharacterPosition.right),
+            dialogue('bob', 'Vil du så ikke være venner?'),
+            dialogue('you', 'nej!'),
+            setVariable('friendlyPoints', state => state.variables.friendlyPoints + 2),
+            jumpTo('EndingAlone'),
         ],
 
         EndingAlone: [
-            narration('You make it home dry under your umbrella.'),
-            narration('As you close the door, you can\'t help but feel a little guilty.'),
-            narration('Maybe you should have been more generous...'),
-            narration('*** ENDING: Dry but Lonely ***'),
+            narration('Du går fra BoB!'),
+            narration('Du ser aldrig BoB igen. '),
+            narration('Senere høre du på tv2 News at BoB er fundet død på slottet.'),
+            narration('Slottet er nu lavet til ældre boliger.'),
             endStory(),
         ],
     },
@@ -213,7 +183,9 @@ export const story = {
     },
 
     places: {
-        bedroom: 'assets/backgrounds/room-bedroom.png',
-        park: 'assets/backgrounds/outdoor-park.png',
+        bedroom: 'assets/backgrounds/slot.png',
+        eat: 'assets/backgrounds/spisestue.png',
+        spookysleep: 'assets/backgrounds/soveværelse.png',
+        pinksleep: 'assets/backgrounds/sove girly.png',
     },
 };

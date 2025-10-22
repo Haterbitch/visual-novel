@@ -32,17 +32,17 @@ export const story = {
         Start: [
             background('bedroom'),
             showCharacter('you', CharacterPose.neutral, CharacterPosition.center),
-            narration('You wake up on a lazy Saturday morning. The sun streams through your window.'),
-            narration('You hear voices from the living room. Your roommates Abigail and Bob must be up already.'),
+            narration('Du står uden for slottet. '),
+            narration('Det er spooky, men spændende.'),
 
             choice(
-                'What do you do?',
+                'Går du ind?',
                 [
-                    'Go to the living room',
+                    'Ja, skal de det indenfor!',
                     'LivingRoom.Main',
                 ],
                 [
-                    'Stay in bed a bit longer',
+                    'NEJ. Get ME THE FUCK OUT OF HERE!',
                     'Bedroom.StayInBed',
                 ],
             ),
